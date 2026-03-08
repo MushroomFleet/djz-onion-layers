@@ -23,8 +23,10 @@ The MODNet background removal model is bundled inside the application — no add
 
 ### Core Tools
 - **Batch Image Load** — Drag-and-drop or file picker for PNG, JPG, and WebP files (up to 200 frames), auto-sorted by filename
+- **Spritesheet Import** — Load a spritesheet image by specifying rows and columns; cells are sliced left-to-right, top-to-bottom and loaded as individual frames in animation order
 - **Square Canvas Container** — Configurable export resolution from 64px to 4096px (default 512px)
 - **Per-Frame Transforms** — X/Y offset sliders with nudge buttons, and scale percentage for each frame independently
+- **Transform Presets** — Save per-frame transform settings (X, Y, Scale, Fit Mode) as named presets stored locally in IndexedDB; apply a saved preset to new frame sequences for consistent alignment across batches
 - **ZIP Export** — All frames exported as RGBA PNGs with custom prefix naming (`walk_001.png`, `walk_002.png`, ...)
 
 ### Onion Skin Modes
@@ -61,6 +63,25 @@ The MODNet background removal model is bundled inside the application — no add
 5. Adjust **X Offset**, **Y Offset**, and **Scale** to align frames
 6. Step through all frames, adjusting alignment as needed
 7. Enter an **Export prefix** (e.g. `walk`) and click **Export ZIP**
+
+### Loading a Spritesheet
+
+1. Click **Load Spritesheet** in the toolbar
+2. Enter the number of **Rows** and **Columns** in the popup
+3. Click **Select File** and choose your spritesheet image
+4. The spritesheet is automatically sliced into individual frames (left-to-right, top-to-bottom) and loaded into the timeline
+
+### Using Transform Presets
+
+When processing multiple batches of sprites that need the same alignment adjustments:
+
+1. Load a frame sequence and adjust all transforms as needed
+2. In the **Transform** panel, click **Save** under Presets
+3. Enter a name for the preset (e.g. `walk-cycle-offsets`)
+4. Later, load a new frame sequence and select the preset from the dropdown
+5. Click **Apply** to apply the saved transforms to the new frames
+6. If the preset has a different frame count than the loaded sequence, transforms are applied to matching positions and a warning is shown
+7. Click **Del** to remove a preset you no longer need
 
 ### Background Removal
 
@@ -124,7 +145,7 @@ If you use this codebase in your research or project, please cite:
   author = {Drift Johnson},
   year = {2025},
   url = {https://github.com/MushroomFleet/djz-onion-layers-web-dev},
-  version = {3.0.0}
+  version = {1.0.0}
 }
 ```
 
