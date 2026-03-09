@@ -19,6 +19,16 @@ When finished, export all adjusted frames as RGBA PNG files packed into a single
 
 The MODNet background removal model is bundled inside the application — no additional downloads required.
 
+### AI Frame Interpolation (Optional)
+
+For RIFE-powered AI frame interpolation (generates smooth in-between frames instead of simple duplication):
+
+1. Download the RIFE v4.22 Lite model from the [vs-mlrt releases](https://github.com/AmusementClub/vs-mlrt/releases/download/external-models/rife_v4.22_lite.7z)
+2. Extract the archive (requires 7-Zip)
+3. Place `rife_v4.22_lite.onnx` into the `models/` folder alongside `modnet.onnx`
+
+The model is ~9 MB. Without it, the Interpolate context menu options will appear greyed out and the app functions normally with duplication only.
+
 ## Features
 
 ### Core Tools
@@ -47,7 +57,8 @@ The MODNet background removal model is bundled inside the application — no add
 ### Animation Workflow
 - **Frame Timeline Strip** — Horizontal scrollable thumbnail strip showing all frames with status badges
 - **Drag-to-Reorder** — Drag thumbnails in the timeline to re-sequence frames
-- **Frame Duplication** — Right-click any thumbnail for x2 or x3 frame interpolation (duplicates every frame in sequence)
+- **Frame Duplication** — Right-click any thumbnail for x2 or x3 frame duplication (copies every frame in sequence)
+- **AI Frame Interpolation (RIFE)** — Right-click any thumbnail for x2 or x3 AI interpolation using RIFE Lite ONNX; generates motion-aware in-between frames instead of duplicates (requires the RIFE model in `models/`)
 - **Fit Modes** — Three transform modes per frame: Contain (default), Cover (fill + crop), Free (native pixel size)
 - **Playback Preview** — Play/Pause button cycles through frames at configurable FPS (1-30)
 - **Undo/Redo** — Full undo/redo stack (Ctrl+Z / Ctrl+Y) for all transform and fit mode changes
@@ -110,10 +121,11 @@ After background removal, some frames may have "holes" — areas where the subje
 10. Frames with a mask show a **"Masked"** badge in the timeline strip
 11. **Export ZIP** — the exported PNGs include your restored regions automatically
 
-### Frame Reordering and Duplication
+### Frame Reordering, Duplication, and Interpolation
 
 - **Reorder:** Drag any thumbnail in the timeline strip to a new position
-- **Duplicate:** Right-click a thumbnail and select **Duplicate x2** or **Duplicate x3** to interpolate the entire sequence
+- **Duplicate:** Right-click a thumbnail and select **Duplicate x2** or **Duplicate x3** to copy every frame in the sequence
+- **Interpolate (RIFE):** Right-click a thumbnail and select **Interpolate x2 (RIFE)** or **Interpolate x3 (RIFE)** to generate AI-interpolated in-between frames using optical flow estimation. This produces smoother motion than simple duplication. A progress bar shows inference progress. Requires the RIFE Lite ONNX model in the `models/` folder (see Installation)
 - **Remove:** Right-click and select **Remove Frame**, or click the X on error frames
 
 ### Playback Preview
@@ -145,7 +157,7 @@ If you use this codebase in your research or project, please cite:
   author = {Drift Johnson},
   year = {2025},
   url = {https://github.com/MushroomFleet/djz-onion-layers-web-dev},
-  version = {1.0.0}
+  version = {1.5.0}
 }
 ```
 
